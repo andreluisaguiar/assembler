@@ -3,6 +3,26 @@ class SymbolTable:
 
     def __init__(self):
         self.table = self._predefined_symbols()
+        self.next_variable_address = 16
+
+    def addEntry(self, symbol, address):
+        self.table[symbol] = int(address)
+
+    def addVariable(self, symbol):
+        if not self.contains(symbol):
+            self.addEntry(symbol, self.next_variable_address)
+            self.next_variable_address += 1
+
+        return self.getAddress(symbol)
+
+    def contains(self, symbol):
+        return symbol in self.table
+
+    def getAddress(self, symbol):
+        if not self.contains(symbol):
+            raise KeyError(f"Symbol not found: {symbol}")
+
+        return self.table[symbol]
 
     @staticmethod
     def _predefined_symbols():
