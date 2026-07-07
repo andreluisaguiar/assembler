@@ -59,4 +59,4 @@ Execute:
 python3 -m unittest discover -s tests
 ```
 
-Os testes atuais cobrem a parte do André: `parser` e `symbol_table`.
+
