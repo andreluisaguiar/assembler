@@ -1,62 +1,64 @@
-# Hack Assembler
+# Assembler Hack (Nand2Tetris — Project 6)
 
-Projeto do assembler Hack do Nand2Tetris, Project 6.
+**Atividade Avaliativa para a disciplina Compiladores do curso Bacharel em Engenharia da Computação na Universidade Federal do Maranhão, ministrada pelo Profº Drº Sergio Souza Costa.**
 
-## Estrutura
+## Dupla
+* **André Luis Aguiar do Nascimento** — 20250071151
+* **Virginia Maria Mondego Ferreira** — 20250071349
+
+## Linguagem e Versão
+* **Linguagem:** Python 3.11+
+* **Justificativa da Escolha:** A escolha do Python baseia-se na sua excelente capacidade de manipulação de strings e Expressões Regulares, o que simplifica drasticamente a etapa de tokenização e limpeza de comentários do *Parser*. Além disso, o uso de dicionários nativos permite um mapeamento direto, limpo e performático para as tabelas de tradução binária (instruções C), criando um código modular, legível e de fácil manutenção.
+
+---
+
+## Estrutura do Repositório
 
 ```text
 assembler/
 ├── parser/
+│   └── parser.py            
 ├── symbol_table/
+│   └── symbol_table.py      
 ├── code/
+│   └── code.py              
 ├── main/
+│   └── assembler.py         
 ├── tests/
-└── projects/06/
-```
-
-## Módulos: parser e symbol_table
-
-### Parser
-
-O módulo `parser` lê arquivos `.asm`, remove comentários e linhas em branco, mantém a instrução atual e expõe os métodos esperados para percorrer e decompor instruções Hack:
-
-- `hasMoreInstructions()`
-- `advance()`
-- `instructionType()`
-- `symbol()`
-- `dest()`
-- `comp()`
-- `jump()`
-- `reset()`
-
-Tipos retornados por `instructionType()`:
-
-- `A_INSTRUCTION`, para instruções como `@2` e `@R0`
-- `C_INSTRUCTION`, para instruções como `D=M`, `D;JGT` e `0;JMP`
-- `L_INSTRUCTION`, para labels como `(LOOP)`
-
-### SymbolTable
-
-O módulo `symbol_table` inicializa a tabela de símbolos com os símbolos predefinidos da plataforma Hack:
-
-- `SP`, `LCL`, `ARG`, `THIS`, `THAT`
-- `R0` até `R15`
-- `SCREEN`
-- `KBD`
-
-Também oferece os métodos:
-
-- `addEntry(symbol, address)`, para labels e símbolos com endereço conhecido
-- `addVariable(symbol)`, para variáveis alocadas a partir do endereço 16
-- `contains(symbol)`
-- `getAddress(symbol)`
-
-## Testes
-
-Execute:
+│   ├── test_parser.py       
+│   ├── test_symbol_table.py
+│   ├── test_code.py         
+│   └── test_integration.py  
+├── projects/06/             
+├── out/  # caso tenha rodado o comando                   
+├── README.md
+└── .gitignore
+``` 
+## Instruções de Execução
+Para rodar o assembler e traduzir um arquivo de código assembly (`.asm`) para binário máquina (`.hack`), execute o orquestrador a partir do diretório raiz do projeto utilizando o terminal:
 
 ```bash
-python3 -m unittest discover -s tests
+python main/assembler.py <caminho_do_arquivo.asm>
 ```
+O programa criará automaticamente um diretório chamado out/ na raiz do projeto e salvará o arquivo traduzido lá dentro.
+## Exemplos de Uso
+Abaixo estão os comandos para executar a tradução de todos os arquivos de teste oficiais do projeto:
+```
+# Exemplo 1: Traduzir o arquivo Add (Obrigatório)
+python main/assembler.py projects/06/add/Add.asm
+# Saída gerada: out/Add.hack
 
+# Exemplo 2: Traduzir o arquivo Max com Labels (Obrigatório)
+python main/assembler.py projects/06/max/Max.asm
+# Saída gerada: out/Max.hack
 
+# Exemplo 3: Traduzir o arquivo Rect (Recomendado)
+python main/assembler.py projects/06/rect/Rect.asm
+# Saída gerada: out/Rect.hack
+
+# Exemplo 4: Traduzir o arquivo Pong (Desafio Opcional)
+python main/assembler.py projects/06/pong/Pong.asm
+# Saída gerada: out/Pong.hack
+```
+## Vídeo de Apresentação 
+O vídeo demonstrando o funcionamento interno do código, a estratégia de duas passagens e a validação das saídas geradas no CPU Emulator pode ser assistido através do link abaixo: 
